@@ -8,7 +8,8 @@
     body {
       font-family: 'Arial', sans-serif;
       text-align: center;
-      background-color: #d9b89a; /* cor de fundo semelhante à da imagem */
+      background: url("urso.png") no-repeat center center fixed;
+      background-size: cover;
       color: #5a3c2d;
       margin: 0;
       padding: 0;
@@ -17,6 +18,8 @@
       padding: 30px;
       max-width: 700px;
       margin: auto;
+      background: rgba(255, 255, 255, 0.7); /* leve fundo branco translúcido pra facilitar leitura */
+      border-radius: 12px;
     }
     h1 {
       font-size: 2.2rem;
@@ -32,16 +35,6 @@
       font-size: 1.2rem;
       margin: 10px 0;
     }
-    .balloons {
-      width: 120px;
-      margin: 20px auto;
-      display: block;
-    }
-    .bear {
-      width: 150px;
-      margin: 20px auto;
-      display: block;
-    }
     #countdown {
       font-size: 1.6rem;
       margin: 20px 0;
@@ -55,159 +48,3 @@
       display: inline-block;
       padding: 12px 20px;
       margin: 15px 5px;
-      font-size: 1rem;
-      color: white;
-      background: #b87333;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-    a.button:hover {
-      background: #8b5a2b;
-    }
-    .maps {
-      background: #4682b4;
-    }
-    .maps:hover {
-      background: #1e90ff;
-    }
-    form {
-      margin-top: 20px;
-      background: rgba(255,255,255,0.85);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    input, select, button {
-      margin: 8px 0;
-      padding: 10px;
-      width: 90%;
-      max-width: 300px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-    button {
-      background: #b87333;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #8b5a2b;
-    }
-    .confirmation {
-      margin-top: 20px;
-      padding: 15px;
-      background: #e0ffe0;
-      border: 1px solid #90ee90;
-      border-radius: 8px;
-      display: none;
-    }
-    .guest-list {
-      margin-top: 20px;
-      text-align: left;
-      background: #fff;
-      padding: 15px;
-      border-radius: 8px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <!-- Balões -->
-    <img src="URSO.png" alt="Balões" class="balloons">
-
-    <h1>✨ Chá Revelação ✨</h1>
-    <h2>Ana Clara 💖 ou Daniel 💙?</h2>
-
-    <p class="date">📅 Data: 13/09/2025<br>⏰ Início: 17:00</p>
-    <p class="address">📍 Endereço: Av. Salvador, nº 2019, Foz do Iguaçu</p>
-
-    <!-- Ursinho -->
-    <img src="https://i.imgur.com/kJ9HxUh.png" alt="Ursinho na nuvem" class="bear">
-
-    <!-- Contagem regressiva -->
-    <div id="countdown"></div>
-
-    <!-- Botão abrir Google Maps -->
-    <a class="button maps" href="https://www.google.com/maps/search/?api=1&query=Av.+Salvador,+2019,+Foz+do+Iguaçu" target="_blank">
-      📍 Abrir no Google Maps
-    </a>
-
-    <!-- Formulário de confirmação -->
-    <form id="rsvpForm">
-      <h3>Confirme sua presença</h3>
-      <input type="text" id="name" placeholder="Seu nome" required>
-      <select id="guests" required>
-        <option value="">Quantas pessoas?</option>
-        <option value="1">1 pessoa</option>
-        <option value="2">2 pessoas</option>
-        <option value="3">3 pessoas</option>
-        <option value="4">4 pessoas</option>
-        <option value="5+">5 ou mais</option>
-      </select>
-      <button type="submit">✅ Confirmar</button>
-    </form>
-
-    <!-- Mensagem de confirmação -->
-    <div class="confirmation" id="confirmationMessage">
-      Obrigado por confirmar sua presença! 🎉
-    </div>
-
-    <!-- Lista de confirmados -->
-    <div class="guest-list" id="guestList" style="display:none;">
-      <h3>Lista de confirmados:</h3>
-      <ul id="guestNames"></ul>
-    </div>
-  </div>
-
-  <script>
-    // Contagem regressiva
-    const countdown = document.getElementById("countdown");
-    const eventDate = new Date("Sep 13, 2025 17:00:00").getTime();
-
-    setInterval(function() {
-      const now = new Date().getTime();
-      const distance = eventDate - now;
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      countdown.innerHTML = `
-        <span>${days} Dias</span>
-        <span>${hours} Horas</span>
-        <span>${minutes} Minutos</span>
-        <span>${seconds} Segundos</span>
-      `;
-    }, 1000);
-
-    // RSVP
-    const form = document.getElementById('rsvpForm');
-    const confirmationMessage = document.getElementById('confirmationMessage');
-    const guestList = document.getElementById('guestList');
-    const guestNames = document.getElementById('guestNames');
-
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const name = document.getElementById('name').value;
-      const guests = document.getElementById('guests').value;
-
-      // Adiciona à lista
-      const li = document.createElement('li');
-      li.textContent = `${name} - ${guests}`;
-      guestNames.appendChild(li);
-
-      // Mostra mensagem e lista
-      confirmationMessage.style.display = 'block';
-      guestList.style.display = 'block';
-
-      // Limpa o formulário
-      form.reset();
-    });
-  </script>
-</body>
-</html>
